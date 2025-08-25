@@ -1,0 +1,33 @@
+# gui-service/docker-compose.yml
+
+services:
+  backend:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/gui_db
+      - SECRET_KEY=your-secret-key
+      - JWT_SECRET_KEY=your-jwt-secret
+    depends_on:
+      db:
+        condition: service_healthy   # ✅ Wait until Postgres is healthy
+
+  db:
+    image: postgres:15
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=gui_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:                     # ✅ Add healthcheck
+      test: ["CMD-SHELL", "pg_isready -U postgres -d gui_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
