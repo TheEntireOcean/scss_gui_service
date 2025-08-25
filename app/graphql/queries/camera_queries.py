@@ -12,7 +12,7 @@ class CameraType(ObjectType):
     id = ID()
     name = String()
     source = String()
-    type = String(name='type')
+    type = String()
     status = String()
     resolution = Field(ResolutionType)
     fps = Int()
@@ -20,6 +20,15 @@ class CameraType(ObjectType):
     is_active = Boolean(name='isActive')
     created_at = DateTime(name='createdAt')
     updated_at = DateTime(name='updatedAt')
+    
+    def resolve_type(self, info):
+        return self.camera_type
+    
+    def resolve_resolution(self, info):
+        return {
+            'width': self.resolution_width,
+            'height': self.resolution_height
+        }
 
 class GetCameras(ObjectType):
     @staticmethod
