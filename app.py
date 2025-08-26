@@ -2,6 +2,7 @@ from app import create_app, socketio
 from app.services.kafka_bridge import KafkaWebSocketBridge
 import os
 import logging
+import atexit
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -29,14 +30,18 @@ def create_and_configure_app():
 
 app, kafka_bridge = create_and_configure_app()
 
-@app.before_first_request
+# Start services after app creation
 def start_background_services():
     """Start background services after app startup"""
     logger.info("Starting background services...")
     kafka_bridge.start()
 
+# Register cleanup
+atexit.register(lambda: hasattr(app, 'kafka_bridge') and app.kafka_bridge.stop())
+
 if __name__ == '__main__':
     try:
+        start_background_services()
         logger.info("Starting GUI Service with SocketIO support...")
         socketio.run(app, 
                     host='0.0.0.0', 
