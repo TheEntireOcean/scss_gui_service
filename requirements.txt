@@ -11,6 +11,9 @@ bcrypt==4.1.3
 sqlalchemy==2.0.31
 redis==5.0.0
 python-dotenv==1.0.0
-# Add more as phases progress, e.g., flask-socketio, kafka-python, redis
-
+# Add these to your existing requirements.txt
+flask-socketio==5.5.0
+python-socketio==5.8.0
+eventlet==0.33.3
+kafka-python==2.0.2
 # Graphene Version: graphene==2.1.9, graphene==3.3.0 caused conflict because flask-graphql is no longer maintained
