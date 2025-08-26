@@ -1151,11 +1151,15 @@ class AuthService:
 ### Input Validation and Security
 
 ```python
-# GraphQL input validation
-class CameraInput:
-    name: str = Field(min_length=1, max_length=255)
-    source: str = Field(regex=r'^(rtsp://|http://|/dev/)')
-    camera_type: str = Field(enum=['rtsp', 'webcam', 'usb'])
+# REST input validation with Marshmallow
+class CameraCreateSchema(Schema):
+    name = fields.Str(required=True, validate=validate.Length(min=1, max=255))
+    source = fields.Str(required=True, validate=validate.Regexp(r'^(rtsp://|http://|/dev/)'))
+    camera_type = fields.Str(required=True, validate=validate.OneOf(['rtsp', 'webcam', 'usb']))
+    
+    @post_load
+    def make_camera(self, data, **kwargs):
+        return Camera(**data)
     
 # SQL injection prevention
 def get_person_by_id(person_id: int) -> Optional[Person]:
@@ -1371,7 +1375,8 @@ spec:
 
 ### Backend Technologies
 - **Framework**: Flask 2.3+
-- **GraphQL**: Graphene-Flask
+- **REST API**: Flask-RESTful
+- **Serialization**: Marshmallow
 - **Database**: PostgreSQL 15+ with SQLAlchemy
 - **Real-time**: Flask-SocketIO
 - **Authentication**: PyJWT + bcrypt
@@ -1383,7 +1388,7 @@ spec:
 ### Frontend Technologies
 - **Framework**: React 18+
 - **State Management**: React Context + useReducer
-- **GraphQL Client**: Apollo Client
+- **API Client**: Axios
 - **Real-time**: Socket.IO-client
 - **Streaming**: WebRTC APIs
 - **Styling**: CSS Modules + Tailwind CSS
@@ -1409,7 +1414,7 @@ spec:
 ### Performance Targets
 - **Concurrent Users**: 5 users simultaneously
 - **Stream Latency**: < 500ms for WebRTC, < 1s for fallback
-- **API Response Time**: < 200ms for GraphQL queries
+- **API Response Time**: < 200ms for REST endpoints
 - **Real-time Updates**: < 100ms for overlay updates
 - **System Uptime**: 99.9% availability
 
