@@ -12,8 +12,10 @@ sqlalchemy==2.0.31
 redis==5.0.0
 python-dotenv==1.0.0
 # Add these to your existing requirements.txt
-flask-socketio==5.5.0
-python-socketio==5.8.0
+Flask==2.3.3
+Flask-SocketIO==5.3.6
+python-socketio==5.11.2
+python-engineio==4.9.0
 eventlet==0.33.3
 kafka-python==2.0.2
 # Graphene Version: graphene==2.1.9, graphene==3.3.0 caused conflict because flask-graphql is no longer maintained
