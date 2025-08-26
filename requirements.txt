@@ -1,21 +1,24 @@
-# gui-service/requirements.txt
+# gui-service/requirements.txt - Updated for REST API
 flask==2.3.3
 flask-sqlalchemy==3.1.1
 flask-bcrypt==1.0.1
 flask-jwt-extended==4.5.3
-graphene==2.1.9
-flask-graphql==2.0.1
+flask-restful==0.3.10
+marshmallow==3.20.1
+marshmallow-sqlalchemy==0.29.0
+flask-marshmallow==0.15.0
 psycopg2-binary==2.9.10
 pyjwt==2.8.0
 bcrypt==4.1.3
 sqlalchemy==2.0.31
 redis==5.0.0
 python-dotenv==1.0.0
-# Add these to your existing requirements.txt
-Flask==2.3.3
+# SocketIO and real-time dependencies
 Flask-SocketIO==5.3.6
 python-socketio==5.11.2
 python-engineio==4.9.0
 eventlet==0.33.3
 kafka-python==2.0.2
-# Graphene Version: graphene==2.1.9, graphene==3.3.0 caused conflict because flask-graphql is no longer maintained
+# File upload and validation
+Pillow==10.0.0
+email-validator==2.0.0
