@@ -1,8 +1,9 @@
+# app/utils/__init__.py
 from app import create_app, db
 from app.models.user import User
-from app.services.auth_service import AuthService
 
 def initialize_database():
+    from app.services.auth_service import AuthService  # Lazy import inside function
     app = create_app()
     with app.app_context():
         # Create tables

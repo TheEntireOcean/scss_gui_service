@@ -6,7 +6,7 @@ from app import db
 from app.api.cameras.serializers import CameraSchema, CameraCreateSchema, CameraUpdateSchema
 from app.utils.response_helpers import success_response, error_response, paginated_response
 from app.api.middleware.auth import token_required
-from app.services.camera_discovery import CameraDiscoveryService
+#from app.services.camera_discovery import CameraDiscoveryService
 import math
 
 cameras_bp = Blueprint('cameras', __name__, url_prefix='/api/cameras')
@@ -135,19 +135,19 @@ class CameraSettingsResource(Resource):
             'camera': schema.dump(camera)
         })
 
-class CameraDiscoverResource(Resource):
-    @token_required
-    def get(self, current_user):
-        discovery_service = CameraDiscoveryService()
-        discovered = discovery_service.discover_rtsp_cameras("192.168.1.0/24")
+# class CameraDiscoverResource(Resource):
+#     @token_required
+#     def get(self, current_user):
+#         discovery_service = CameraDiscoveryService()
+#         discovered = discovery_service.discover_rtsp_cameras("192.168.1.0/24")
         
-        return success_response({
-            'discovered_cameras': discovered
-        })
+#         return success_response({
+#             'discovered_cameras': discovered
+#         })
 
 cameras_api.add_resource(CameraListResource, '')
 cameras_api.add_resource(CameraDetailResource, '/<int:camera_id>')
 cameras_api.add_resource(CameraStartResource, '/<int:camera_id>/start')
 cameras_api.add_resource(CameraStopResource, '/<int:camera_id>/stop')
 cameras_api.add_resource(CameraSettingsResource, '/<int:camera_id>/settings')
-cameras_api.add_resource(CameraDiscoverResource, '/discover')
+#cameras_api.add_resource(CameraDiscoverResource, '/discover')
