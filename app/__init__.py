@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager
 from flask_socketio import SocketIO
+from flask_restful import Api
 from flask_marshmallow import Marshmallow
 import os
 
@@ -30,10 +31,10 @@ def create_app(config_class='app.config.Config'):
                      engineio_logger=True)
 
     # Register API blueprints
-    from app.api.auth import auth_bp
-    from app.api.cameras import cameras_bp
-    from app.api.persons import persons_bp
-    from app.api.system import system_bp
+    from app.api.auth.routes import auth_bp
+    from app.api.cameras.routes import cameras_bp
+    from app.api.persons.routes import persons_bp
+    from app.api.system.routes import system_bp
     
     app.register_blueprint(auth_bp)
     app.register_blueprint(cameras_bp)
